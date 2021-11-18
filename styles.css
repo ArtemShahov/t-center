@@ -1,0 +1,68 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.header,
+.nav-menu,
+.main,
+.ad,
+.footer {
+  padding: 2em;
+}
+
+.header {
+  background-color: aquamarine;
+}
+
+.nav-menu {
+  background-color: whitesmoke;
+}
+
+.main {
+  background-color: tomato;
+}
+
+.ad {
+  background-color: thistle;
+}
+
+.footer {
+  background-color: cadetblue;
+}
+
+.content-wrapper {
+  flex-grow: 1;
+  display: flex;
+}
+
+.nav-menu,
+.ad {
+  width: 25%;
+}
+
+.main {
+  width: 50%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 300px;
+}
+
+.form ~ button {
+  margin-top: 20px;
+}
