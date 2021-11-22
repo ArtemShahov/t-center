@@ -70,6 +70,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  overflow: hidden;
 }
 
 .form ~ button {
@@ -79,7 +80,7 @@ body {
 .form-group {
   position: relative;
   margin-bottom: 0px;
-  transition: margin .3s ease;
+  transition: margin .3s cubic-bezier(0.25, 0.8, 0.5, 1);
 }
 
 .form-input {
@@ -139,8 +140,18 @@ body {
 .invalid-input__help-text {
   color: red;
   font-size: .9em;
-  opacity: 1;
-  transition: opacity 0.3s ease;
   position: absolute;
   top: 100%;
+  animation: helperText .3s ease-in  1  ;
+}
+
+@keyframes helperText {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }

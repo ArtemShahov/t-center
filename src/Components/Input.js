@@ -7,12 +7,10 @@ class Input {
     this.view = document.createElement('div');
     this.$input = document.createElement('input');
     this.$label = document.createElement('label');
-    this.$helperText = document.createElement('div');
 
     this.view.classList.add('form-group');
     this.$input.classList.add('form-input');
     this.$label.classList.add('form-input-label');
-    this.$helperText.classList.add('invalid-input__help-text');
 
     this.$label.textContent = this.label;
 
@@ -20,7 +18,7 @@ class Input {
       this.$input.setAttribute(attr, this.inputAttrs[attr])
     }
 
-    this.view.append(this.$input, this.$label, this.$helperText);
+    this.view.append(this.$input, this.$label);
 
     this.$input.addEventListener('focus', this.onInputFocus.bind(this));
     this.$input.addEventListener('blur', this.onInputBlur.bind(this));
@@ -64,7 +62,7 @@ class Input {
     if (e.target.classList.contains('form-input')) {
       this.removeErrors();
 
-      const $container = e.target.closest('.form-group');      
+      const $container = e.target.closest('.form-group');
 
       if ($container) {
         $container.classList.add('focused')
@@ -84,7 +82,10 @@ class Input {
   removeErrors() {
     this.view.classList.remove('invalid-input');
     this.view.style.marginBottom = 0;
-    this.$helperText.innerHTML = '';
+    if (this.$helperText) {
+      this.$helperText.remove();
+      this.$helperText = null;
+    }
   }
 
   validate() {
@@ -103,6 +104,11 @@ class Input {
   }
 
   setHelpText(helpText) {
+    if (!this.$helperText) {
+      this.$helperText = document.createElement('div');
+      this.$helperText.classList.add('invalid-input__help-text');
+      this.view.append(this.$helperText);
+    }
     const $div = document.createElement('div');
     $div.textContent = helpText;
     this.$helperText.append($div);
