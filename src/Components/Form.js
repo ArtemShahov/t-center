@@ -5,25 +5,38 @@ function Form(title, fieldSettings, onSubmit) {
   const $formTitle = document.createElement('h2');
   const $form = document.createElement('form');
   const $submit = document.createElement('input');
-  
+  const inputs = fieldSettings.map(fieldSet => new Input(fieldSet));
+
   $formTitle.textContent = title;
-  fieldSettings.forEach(fieldAttr => $form.append(Input(fieldAttr)))
+
   $submit.setAttribute('type', 'submit');
-  $form.append($submit);
-  $form.classList.add('form');
   $form.setAttribute('autocomplete', 'off');
-  $form.addEventListener('submit', onSubmitHandler);
+
+  $formTitle.classList.add('form-title');
+  $formWrapper.classList.add('form-wrapper');
+  $form.classList.add('form');
+
+  inputs.forEach(input => $form.append(input.view));
+  $form.append($submit);
   $formWrapper.append($formTitle, $form);
+
+  $form.addEventListener('submit', onSubmitHandler);
 
   return $formWrapper;
 
   function onSubmitHandler(event) {
     event.preventDefault();
-    const formData = fieldSettings.reduce((acc, item) => ({
-      ...acc,
-      [item.name]: $form.elements[item.name].value,
-    }), {})
-    onSubmit(formData);
+    let isValid = true;
+    inputs.forEach(input => {
+      if (!input.validate()) isValid = false;
+    });
+    if (isValid) {
+      const formData = fieldSettings.reduce((acc, item) => ({
+        ...acc,
+        [item.inputAttrs.name]: $form.elements[item.inputAttrs.name],
+      }), {})
+      onSubmit(formData);
+    }
   }
 }
 

@@ -3,14 +3,37 @@ import Button from './Button.js';
 
 function SignIn() {
   const eventListeners = {
+    'update': null,
     'switchForm': null,
     'onSubmit': null,
   }
   const title = 'Sign in';
   const $switchButton = Button('Sign up');
   const fieldSettings = [
-    { name: 'email', type: 'text', placeholder: 'Email' },
-    { name: 'password', type: 'password', placeholder: 'Password' },
+    {
+      inputAttrs:
+        { name: 'email', type: 'email' },
+      label: 'Email',
+      validProps: [
+        {
+          validType: 'required',
+          value: true,
+          helpText: 'Email is required.',
+        },
+      ],
+    },
+    {
+      inputAttrs:
+        { name: 'password', type: 'password' },
+      label: 'Password',
+      validProps: [
+        {
+          validType: 'required',
+          value: true,
+          helpText: 'Password is required.',
+        },
+      ],
+    },
   ];
   this.addEventListener = addEventListener;
   this.view = Form(title, fieldSettings, onSubmit);
@@ -28,9 +51,10 @@ function SignIn() {
   }
 
   function onSubmit(userData) {
-    eventListeners.onSubmit(userData);
+    eventListeners.onSubmit(userData).then((result) => {
+      if (result) eventListeners.update();
+    });
   }
-
 }
 
 export default SignIn;

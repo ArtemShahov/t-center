@@ -9,6 +9,7 @@ html {
 }
 
 body {
+  font-family: "Roboto", sans-serif;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -56,13 +57,90 @@ body {
   width: 50%;
 }
 
+.form-wrapper {
+  background-color: rgb(243, 243, 243);
+  padding: 20px;
+}
+
+.form-title {
+  margin-bottom: 20px;
+}
+
 .form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  max-width: 300px;
+  gap: 15px;
 }
 
 .form ~ button {
   margin-top: 20px;
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 0px;
+  transition: margin .3s ease;
+}
+
+.form-input {
+  font-size: 16px;
+  line-height: 20px;
+  padding: 8px 0;
+  width: 100%;
+  background-color: transparent;
+  border-style: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.87);
+}
+.form-input:focus {
+  outline: none;
+}
+
+.form-input-label {
+  position: absolute;
+  top: 6px;
+  left: 0;
+  height: 20px;
+  line-height: 20px;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  transform-origin: top left;
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.5, 1);
+}
+
+.form-input:focus + .form-input-label,
+.focused > .form-input + .form-input-label {
+  transform: translateY(-18px) scale(0.75);
+}
+
+.form-group::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 30%;
+  right: 70%;
+  height: 2px;
+  opacity: 1;
+  background-color: rgb(61, 113, 255);
+  transition: left 0.3s cubic-bezier(0.25, 0.8, 0.5, 1), right 0.5s cubic-bezier(0.25, 0.8, 0.5, 1),
+    opacity 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+}
+
+.form-group.focused::after {
+  left: 0;
+  opacity: 1;
+  right: 0;
+}
+
+.invalid-input::after {
+  background-color: red;
+}
+
+.invalid-input__help-text {
+  color: red;
+  font-size: .9em;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  position: absolute;
+  top: 100%;
 }

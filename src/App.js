@@ -1,30 +1,20 @@
-import MainView from "./MainView.js";
-import AuthView from "./AuthView.js";
+import MainView from "./View/MainView.js";
+import AuthView from "./View/AuthView.js";
+import Auth from "./Auth.js";
 
 function App() {
   const authView = new AuthView();
   const mainView = new MainView();
 
   authView.addEventListener('onChange', update);
-  mainView.addEventListener('signOut', authView.signOut);
+  mainView.addEventListener('onChange', update);
   update();
-
   function update() {
-    clearView();
-    if (authView.checkAuth()) {
+    if (Auth.getUser()) {
       mainView.render();
     } else {
       authView.render();
     }
-  }
-
-  function clearView() {
-    const $header = document.getElementById('header');
-    const $navMenu = document.getElementById('nav-menu');
-    const $main = document.getElementById('main');
-    $header.innerHTML = '';
-    $navMenu.innerHTML = '';
-    $main.innerHTML = '';
   }
 }
 
