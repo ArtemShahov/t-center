@@ -10,8 +10,9 @@ function App() {
   authView.addEventListener('onViewChange', update);
   mainView.addEventListener('onViewChange', update);
 
-  window.addEventListener('hashchange', update)
+  window.addEventListener('hashchange', update);
 
+  Router.checkHash();
   update();
 
   function update() {

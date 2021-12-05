@@ -2,11 +2,12 @@ import Page from './Page.js';
 import Button from '../Components/common/Button.js';
 import DataService from '../DataService/DataService.js';
 import EditUserForm from '../Components/Forms/EditUserForm.js';
+import Router from '../utils/Router.js';
 
 class EditUser extends Page {
   constructor(path) {
     super(path);
-    this.Router.routes = {
+    this.routes = {
       '': this.renderUserList,
       ':userEmail': this.renderEditForm,
     };
@@ -14,11 +15,11 @@ class EditUser extends Page {
 
   render() {
     super.render();
-    const hash = this.Router.getNextHash(this.path);
-    if (this.Router.routes[hash]) {
-      this.Router.routes[hash].call(this);
+    const hash = Router.getNextHash(this.path);
+    if (this.routes[hash]) {
+      this.routes[hash].call(this);
     } else {
-      this.Router.routes[':userEmail'].call(this, hash);
+      this.routes[':userEmail'].call(this, hash);
     }
 
   }
@@ -89,9 +90,13 @@ class EditUser extends Page {
     this.$view.append(editForm.$view);
   }
 
+  renderThisPage() {
+    Router.goTo(`/${this.path}`);
+  }
+
   onClickHandler(event) {
     const { action, userEmail } = event.target?.dataset;
-    if (action === 'renderEditForm') this.Router.goNext(`/${userEmail}`);
+    if (action === 'renderEditForm') Router.goNext(`/${userEmail}`);
     if (action === 'deleteUser') this.deleteUser(userEmail);
   }
 

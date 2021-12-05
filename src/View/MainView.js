@@ -11,8 +11,7 @@ class MainView extends View {
   constructor() {
     super();
     this.path = '';
-    this.Router = new Router('');
-    this.Router.routes = {
+    this.routes = {
       '': Home,
       'about': About,
       'editUser': EditUser,
@@ -20,7 +19,7 @@ class MainView extends View {
   }
 
   render() {
-    const path = this.Router.getNextHash(this.path);
+    const path = Router.getNextHash(this.path);
     this.clearView();
     this.renderNavMenu();
     this.renderSignOutBtn();
@@ -28,7 +27,7 @@ class MainView extends View {
   }
 
   renderPage(path = '/') {
-    const page = new this.Router.routes[path](path);
+    const page = new this.routes[path](path);
     page.addEventListener('onViewChange', this.eventListeners.onViewChange.bind(this));
     page.render();
   }
@@ -58,7 +57,7 @@ class MainView extends View {
   onNavClick(event) {
     const { path } = event.target.dataset;
     if (path) {
-      this.Router.goTo(path);
+      Router.goTo(path);
     }
   }
 }
