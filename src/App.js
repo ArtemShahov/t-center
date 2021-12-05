@@ -12,7 +12,6 @@ function App() {
 
   window.addEventListener('hashchange', update)
 
-  Router.checkHash();
   update();
 
   function update() {

@@ -1,9 +1,9 @@
-
+import Router from "../utils/Router.js";
 
 class Page {
   constructor(path) {
     this.path = path;
-    // console.log(this.path);
+    this.Router = new Router(this.path);
     this.eventListeners = {
       'onViewChange': null,
     };
@@ -20,6 +20,10 @@ class Page {
     this.$main.innerHTML = '';
     this.$view.innerHTML = '';
     this.$main.append(this.$view);
+  }
+
+  renderThisPage() {
+    this.Router.goTo(`/${this.path}`);
   }
 }
 

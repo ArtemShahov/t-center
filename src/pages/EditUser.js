@@ -2,12 +2,11 @@ import Page from './Page.js';
 import Button from '../Components/common/Button.js';
 import DataService from '../DataService/DataService.js';
 import EditUserForm from '../Components/Forms/EditUserForm.js';
-import Router from '../utils/Router.js';
 
 class EditUser extends Page {
   constructor(path) {
     super(path);
-    this.routes = {
+    this.Router.routes = {
       '': this.renderUserList,
       ':userEmail': this.renderEditForm,
     };
@@ -15,12 +14,11 @@ class EditUser extends Page {
 
   render() {
     super.render();
-    // this.renderUserList();
-    const hash = Router.getNextHash(this.path);
-    if (this.routes[hash]) {
-      this.routes[hash].call(this);
+    const hash = this.Router.getNextHash(this.path);
+    if (this.Router.routes[hash]) {
+      this.Router.routes[hash].call(this);
     } else {
-      this.routes[':userEmail'].call(this, hash);
+      this.Router.routes[':userEmail'].call(this, hash);
     }
 
   }
@@ -85,16 +83,15 @@ class EditUser extends Page {
   }
 
   async renderEditForm(userEmail) {
-    // const user = this.data.find(user => user.email === userEmail);
     const editForm = await EditUserForm(userEmail);
-    editForm.addEventListener('onViewChange', () => Router.goTo(`/${this.path}`));
+    editForm.addEventListener('onViewChange', this.renderThisPage.bind(this));
     this.$view.innerHTML = '';
     this.$view.append(editForm.$view);
   }
 
   onClickHandler(event) {
     const { action, userEmail } = event.target?.dataset;
-    if (action === 'renderEditForm') Router.goNext(`/${userEmail}`);
+    if (action === 'renderEditForm') this.Router.goNext(`/${userEmail}`);
     if (action === 'deleteUser') this.deleteUser(userEmail);
   }
 

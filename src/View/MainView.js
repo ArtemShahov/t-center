@@ -10,8 +10,9 @@ import Router from '../utils/Router.js';
 class MainView extends View {
   constructor() {
     super();
-    this.path  = '';
-    this.routes = {
+    this.path = '';
+    this.Router = new Router('');
+    this.Router.routes = {
       '': Home,
       'about': About,
       'editUser': EditUser,
@@ -19,7 +20,7 @@ class MainView extends View {
   }
 
   render() {
-    const path = Router.getNextHash(this.path);
+    const path = this.Router.getNextHash(this.path);
     this.clearView();
     this.renderNavMenu();
     this.renderSignOutBtn();
@@ -27,7 +28,7 @@ class MainView extends View {
   }
 
   renderPage(path = '/') {
-    const page = new this.routes[path](path);
+    const page = new this.Router.routes[path](path);
     page.addEventListener('onViewChange', this.eventListeners.onViewChange.bind(this));
     page.render();
   }
@@ -57,7 +58,7 @@ class MainView extends View {
   onNavClick(event) {
     const { path } = event.target.dataset;
     if (path) {
-      Router.goTo(path);
+      this.Router.goTo(path);
     }
   }
 }

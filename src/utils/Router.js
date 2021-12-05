@@ -1,48 +1,16 @@
-function goNext(hash) {
-  window.location.hash += hash;
-}
-
-function goTo(hash) {
-  window.location.hash = '#' + hash;
-}
-
-function getHash() {
-  const hash = window.location.hash.replace('#', '');
-  return hash;
-}
-
-function getNextHash(currentPath) {
-  const fullHash = getHash();
-  const hashArray = fullHash.split('/');
-  const currentPathIndex = hashArray.indexOf(currentPath);
-  console.log(hashArray[currentPathIndex + 1] || '');
-  return hashArray[currentPathIndex + 1] || '';
-}
-
-function checkHash() {
-  const hash = getHash();
-  if (!hash) {
-    window.location.hash = '#';
-    return false;
-  }
-  return true;
-}
-
-class Routes {
-  constructor(path) {
-    this.path = path;
+class Router {
+  constructor(currentPath) {
+    this.currentPath = currentPath;
     this.routes = {};
+    this.checkHash();
   }
 
-  getHash() {
+  getFullHash() {
     const hash = window.location.hash.replace('#', '');
     return hash;
   }
 
-  goNext(hash, component) {
-    if (component) {
-      this.routes.component()
-    }
+  goNext(hash) {
     window.location.hash += hash;
   }
 
@@ -51,15 +19,15 @@ class Routes {
   }
 
   getNextHash() {
-    const fullHash = getHash();
+    const fullHash = this.getFullHash();
     const hashArray = fullHash.split('/');
-    const currentPathIndex = hashArray.indexOf(this.path);
+    const currentPathIndex = hashArray.indexOf(this.currentPath);
     console.log(hashArray[currentPathIndex + 1] || '');
     return hashArray[currentPathIndex + 1] || '';
   }
 
   checkHash() {
-    const hash = getHash();
+    const hash = this.getFullHash();
     if (!hash) {
       window.location.hash = '#';
       return false;
@@ -68,10 +36,4 @@ class Routes {
   }
 }
 
-export default {
-  goNext,
-  goTo,
-  getHash,
-  checkHash,
-  getNextHash,
-}
+export default Router;
