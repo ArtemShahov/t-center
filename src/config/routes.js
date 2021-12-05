@@ -1,6 +1,6 @@
-const Home = `<h1>Home</h1>`;
-const About = `<h1>About</h1>`;
-const Contact = `<h1>Contact</h1>`;
+import Home from '../pages/Home.js';
+import About from '../pages/About.js';
+import EditUser from '../pages/EditUser.js';
 
 export const routes = {
   '/': {
@@ -11,8 +11,8 @@ export const routes = {
     linkTitle: 'About',
     component: About,
   },
-  '/contact': {
-    linkTitle: 'Contact',
-    component: Contact,
-  },
+  '/editUser': {
+    linkTitle: 'Edit',
+    component: EditUser,
+  }
 };

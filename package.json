@@ -1,0 +1,25 @@
+{
+  "name": "training-center",
+  "version": "1.0.0",
+  "description": "**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "sass styles.scss styles.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://artemshakhov@bitbucket.org/artemshakhov/training-center.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://bitbucket.org/artemshakhov/training-center/issues"
+  },
+  "homepage": "https://bitbucket.org/artemshakhov/training-center#readme",
+  "dependencies": {
+    "node-sass": "^6.0.1",
+    "sass": "^1.43.5"
+  }
+}

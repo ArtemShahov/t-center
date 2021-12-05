@@ -1,6 +1,6 @@
-import SignUp from "../Components/SignUp.js";
-import SignIn from '../Components/SignIn.js';
-import Auth from "../Auth.js";
+import SignUp from "../Components/Forms/SignUp.js";
+import SignIn from '../Components/Forms/SignIn.js';
+import Auth from "../utils/Auth.js";
 import View from "./View.js";
 
 class AuthView extends View {
@@ -8,7 +8,7 @@ class AuthView extends View {
     super();
     this.signInView = true;
     this.eventListeners = {
-      'onChange': null,
+      'onViewChange': null,
     }
   }
 
@@ -20,19 +20,19 @@ class AuthView extends View {
       this.renderForm(SignUp, Auth.onSubmitSignUp);
     }
   }
-
+  
   renderForm(Form, onSubmit) {
-    this.form = new Form();
+    this.form = Form();
     this.form.addEventListener('onSubmit', onSubmit);
     this.form.addEventListener('switchForm', this.switchForm.bind(this));
-    this.form.addEventListener('update', this.eventListeners.onChange);
-    this.$main.append(this.form.view);
+    this.form.addEventListener('update', this.eventListeners.onViewChange);
+    this.$main.append(this.form.$view);
 
   }
 
   switchForm() {
     this.signInView = !this.signInView;
-    this.eventListeners.onChange();
+    this.eventListeners.onViewChange();
   }
 }
 

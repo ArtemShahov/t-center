@@ -1,22 +1,35 @@
-import Button from "../Components/Button.js";
-import Auth from '../Auth.js';
+import Button from "../Components/common/Button.js";
+import Auth from '../utils/Auth.js';
 import View from "./View.js";
 import { routes } from '../config/routes.js';
+import Home from "../pages/Home.js";
+import EditUser from "../pages/EditUser.js";
+import About from "../pages/About.js";
+import Router from '../utils/Router.js';
 
 class MainView extends View {
   constructor() {
     super();
+    this.path  = '';
+    this.routes = {
+      '': Home,
+      'about': About,
+      'editUser': EditUser,
+    }
   }
 
   render() {
+    const path = Router.getNextHash(this.path);
     this.clearView();
-    this.renderContent();
     this.renderNavMenu();
     this.renderSignOutBtn();
+    this.renderPage(path);
   }
 
-  renderContent() {
-    this.$main.innerHTML = routes[window.location.pathname].component;
+  renderPage(path = '/') {
+    const page = new this.routes[path](path);
+    page.addEventListener('onViewChange', this.eventListeners.onViewChange.bind(this));
+    page.render();
   }
 
   renderSignOutBtn() {
@@ -27,7 +40,7 @@ class MainView extends View {
 
   signOut() {
     Auth.signOut();
-    this.eventListeners.onChange();
+    this.eventListeners.onViewChange();
   }
 
   renderNavMenu() {
@@ -43,20 +56,10 @@ class MainView extends View {
 
   onNavClick(event) {
     const { path } = event.target.dataset;
-    if (routes[path]) {
-      this.onNavigate(path);
+    if (path) {
+      Router.goTo(path);
     }
   }
-
-  onNavigate(pathName) {
-    window.history.pushState(
-      {},
-      pathName,
-      window.location.origin + pathName
-    )
-    this.$main.innerHTML = routes[pathName].component;
-  }
-
 }
 
 export default MainView;
