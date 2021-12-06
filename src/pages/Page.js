@@ -6,7 +6,6 @@ class Page {
     };
     this.$view = document.createElement('div');
     this.$main = document.getElementById('main');
-
   }
 
   addEventListener(event, callback) {

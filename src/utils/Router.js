@@ -12,15 +12,14 @@ function goTo(hash) {
 }
 
 function getNextHash(path) {
-  const fullHash = this.getFullHash();
+  const fullHash = getFullHash();
   const hashArray = fullHash.split('/');
   const currentPathIndex = hashArray.indexOf(path);
-  console.log(hashArray[currentPathIndex + 1] || '');
   return hashArray[currentPathIndex + 1] || '';
 }
 
 function checkHash() {
-  const hash = this.getFullHash();
+  const hash = getFullHash();
   if (!hash) {
     window.location.hash = '#';
     return false;
@@ -28,11 +27,18 @@ function checkHash() {
   return true;
 }
 
+function goBack() {
+  const hash = window.location.hash.replace('#', '');
+  const hashArray = hash.split('/');
+  hashArray.pop();
+  window.location.hash = '#' + hashArray.join('/');
+}
 
 export default {
   getFullHash,
   goNext,
   goTo,
+  goBack,
   getNextHash,
   checkHash,
 };

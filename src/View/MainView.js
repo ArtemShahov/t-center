@@ -15,7 +15,7 @@ class MainView extends View {
       '': Home,
       'about': About,
       'editUser': EditUser,
-    }
+    };
   }
 
   render() {
@@ -26,7 +26,7 @@ class MainView extends View {
     this.renderPage(path);
   }
 
-  renderPage(path = '/') {
+  renderPage(path) {
     const page = new this.routes[path](path);
     page.addEventListener('onViewChange', this.eventListeners.onViewChange.bind(this));
     page.render();
@@ -34,13 +34,13 @@ class MainView extends View {
 
   renderSignOutBtn() {
     const $btn = Button('Sign out');
-    $btn.addEventListener('click', this.signOut.bind(this));
+    $btn.addEventListener('click', this.signOut);
     this.$header.append($btn);
   }
 
   signOut() {
     Auth.signOut();
-    this.eventListeners.onViewChange();
+    Router.goTo('');
   }
 
   renderNavMenu() {

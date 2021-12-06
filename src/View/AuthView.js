@@ -2,6 +2,7 @@ import SignUp from "../Components/Forms/SignUp.js";
 import SignIn from '../Components/Forms/SignIn.js';
 import Auth from "../utils/Auth.js";
 import View from "./View.js";
+import Router from "../utils/Router.js";
 
 class AuthView extends View {
   constructor() {
@@ -9,30 +10,34 @@ class AuthView extends View {
     this.signInView = true;
     this.eventListeners = {
       'onViewChange': null,
+    };
+    this.path = '';
+    this.routes = {
+      '': () => Router.goTo('/signIn'),
+      'signIn': () => this.renderForm(SignIn, Auth.onSubmitSignIn),
+      'signUp': () => this.renderForm(SignUp, Auth.onSubmitSignUp),
     }
   }
 
   render() {
     this.clearView();
-    if (this.signInView) {
-      this.renderForm(SignIn, Auth.onSubmitSignIn);
-    } else {
-      this.renderForm(SignUp, Auth.onSubmitSignUp);
-    }
+    const hash = Router.getNextHash(this.path);
+    this.routes[hash]();
   }
   
   renderForm(Form, onSubmit) {
     this.form = Form();
     this.form.addEventListener('onSubmit', onSubmit);
     this.form.addEventListener('switchForm', this.switchForm.bind(this));
-    this.form.addEventListener('update', this.eventListeners.onViewChange);
+    this.form.addEventListener('update', () => Router.goTo(''));
     this.$main.append(this.form.$view);
-
   }
 
   switchForm() {
-    this.signInView = !this.signInView;
-    this.eventListeners.onViewChange();
+    const hash = Router.getNextHash(this.path);
+    if (hash === 'signIn') Router.goTo('/signUp');
+    if (hash === 'signUp') Router.goTo('/signIn');
+    
   }
 }
 

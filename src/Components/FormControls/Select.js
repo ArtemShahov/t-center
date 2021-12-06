@@ -1,16 +1,17 @@
-class Select {
+import BaseFormControl from "./BaseFormControl.js";
+
+class Select extends BaseFormControl {
   constructor(selectSettings) {
+    super(selectSettings);
     this.selectSettings = selectSettings;
     this.label = this.selectSettings.label;
     this.attrs = this.selectSettings.attrs;
     this.name = this.attrs.name;
     this.values = this.attrs.values;
     this.value = this.attrs.value;
-    this.$view = document.createElement('div');
-    this.$label = document.createElement('label');
-    this.$select = document.createElement('select');
+    this.$formControl = document.createElement('select');
 
-    this.$select.setAttribute('name', this.name);
+    this.$formControl.setAttribute('name', this.name);
     this.$label.textContent = this.label;
     this.render();
   }
@@ -27,15 +28,11 @@ class Select {
 
   render() {
     this.$view.innerHTML = '';
-    this.$select.append(this.createOption());
-    this.$label.append(this.$select);
-    this.values.forEach(option => this.$select.append(this.createOption(option)));
-    if (this.value) this.$select.value = this.value;
+    this.$formControl.append(this.createOption());
+    this.$label.append(this.$formControl);
+    this.values.forEach(option => this.$formControl.append(this.createOption(option)));
+    if (this.value) this.$formControl.value = this.value;
     this.$view.append(this.$label);
-  }
-
-  getValue() {
-    return this.$select.value;
   }
 }
 

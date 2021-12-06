@@ -1,21 +1,20 @@
-import Validator from '../../utils/Validator.js';
 import Input from './Input.js';
 class TextField extends Input {
   constructor(settings) {
     super(settings);
 
-    this.$input.addEventListener('focus', this.onInputFocus.bind(this));
-    this.$input.addEventListener('blur', this.onInputBlur.bind(this));
+    this.$formControl.addEventListener('focus', this.onInputFocus.bind(this));
+    this.$formControl.addEventListener('blur', this.onInputBlur.bind(this));
     this.render();
   }
 
   render() {
     this.$view.classList.add('form-group');
-    this.$input.classList.add('form-input');
+    this.$formControl.classList.add('form-input');
     this.$label.classList.add('form-input-label');
-    if (this.$input.value.length) this.$view.classList.add('focused');
+    if (this.$formControl.value.length) this.$view.classList.add('focused');
 
-    this.$view.append(this.$input, this.$label);
+    this.$view.append(this.$formControl, this.$label);
   }
 
   onInputFocus(e) {
@@ -37,10 +36,6 @@ class TextField extends Input {
         $container.classList.remove('focused');
       }
     }
-  }
-
-  getValue() {
-    return this.$input.value;
   }
 }
 

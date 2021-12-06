@@ -9,7 +9,7 @@ class EditUser extends Page {
     super(path);
     this.routes = {
       '': this.renderUserList,
-      ':userEmail': this.renderEditForm,
+      '*': this.renderEditForm,
     };
   }
 
@@ -19,13 +19,13 @@ class EditUser extends Page {
     if (this.routes[hash]) {
       this.routes[hash].call(this);
     } else {
-      this.routes[':userEmail'].call(this, hash);
+      this.routes['*'].call(this, hash);
     }
 
   }
 
   async renderUserList() {
-    this.data = await DataService.getUsersData();
+    const data = await DataService.getUsersData();
     const $userList = document.createElement('ul');
     const $userListTitle = document.createElement('h2');
 
@@ -33,7 +33,7 @@ class EditUser extends Page {
     $userListTitle.classList.add('users-list-title');
     $userList.classList.add('users-list');
 
-    this.data.forEach(userData => {
+    data.forEach(userData => {
       $userList.append(this.createUserItem(userData));
     });
 
@@ -85,7 +85,7 @@ class EditUser extends Page {
 
   async renderEditForm(userEmail) {
     const editForm = await EditUserForm(userEmail);
-    editForm.addEventListener('onViewChange', this.renderThisPage.bind(this));
+    editForm.addEventListener('onViewChange', Router.goBack);
     this.$view.innerHTML = '';
     this.$view.append(editForm.$view);
   }

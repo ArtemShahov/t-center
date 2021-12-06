@@ -7,20 +7,16 @@ class ChoiceItem extends Input {
     this.render();
   }
   render() {
-    this.$label.prepend(this.$input);
+    this.$label.prepend(this.$formControl);
     this.$view.append(this.$label);
   }
 
-  getValue() {
-      return this.$input.value;
-  }
-
   setChecked() {
-    this.$input.setAttribute('checked', 'true');
+    this.$formControl.setAttribute('checked', 'true');
   }
 
   isChecked() {
-    return this.$input.checked;
+    return this.$formControl.checked;
   }
 }
 

@@ -1,24 +1,22 @@
 import Validator from "../../utils/Validator.js";
+import BaseFormControl from "./BaseFormControl.js";
 
-class Input {
+class Input extends BaseFormControl {
   constructor(attrs) {
+    super(attrs);
     this.name = attrs.name;
     this.type = attrs.type;
     this.value = attrs.value;
     this.label = attrs.label;
     this.validProps = attrs.validProps;
 
-    this.$input = document.createElement('input');
-    this.$label = document.createElement('label');
-    this.$view = document.createElement('div');
-
-    this.$input.setAttribute('name', this.name);
-    this.$input.setAttribute('type', this.type);
-    this.$input.setAttribute('value', this.value || '');
+    this.$formControl.setAttribute('name', this.name);
+    this.$formControl.setAttribute('type', this.type);
+    this.$formControl.setAttribute('value', this.value || '');
     this.$view.classList.add('form-group');
     this.$label.textContent = this.label;
 
-    this.$view.append(this.$label, this.$input);
+    this.$view.append(this.$label, this.$formControl);
   }
 
   validate() {
@@ -26,7 +24,7 @@ class Input {
     let isValid = true;
     if (this.validProps) {
       for (const prop of this.validProps) {
-        if (!Validator?.[prop.validType]?.func(this.$input, prop.value)) {
+        if (!Validator?.[prop.validType]?.func(this.$formControl, prop.value)) {
           isValid = false;
           const warningMessage = prop.helperText || Validator[prop.validType]?.helperText?.(prop.value) || 'Invalid value';
           this.setWarning(warningMessage);

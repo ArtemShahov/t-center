@@ -1,8 +1,8 @@
 import Page from "./Page.js";
 
 class Home extends Page {
-  constructor(path) {
-    super(path);
+  constructor() {
+    super();
   }
 
   render() {
