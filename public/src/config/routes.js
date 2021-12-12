@@ -1,6 +1,6 @@
 import Home from '../pages/Home.js';
 import About from '../pages/About.js';
-import EditUser from '../pages/EditUser.js';
+import EditUserList from '../pages/EditUserList.js';
 
 export const routes = {
   '/': {
@@ -11,16 +11,16 @@ export const routes = {
     linkTitle: 'About',
     component: About,
   },
-  '/editUser': {
+  '/editUserList': {
     linkTitle: 'Edit',
-    component: EditUser,
+    component: EditUserList,
   }
 };
 
 export default {
-  signIn: 'signIn',
+  signIn: '',
   signUp: 'signUp',
   home: 'home',
   about: 'about',
-  editUser: 'editUser',
+  editUserList: 'editUserList',
 }

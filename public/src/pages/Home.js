@@ -5,8 +5,7 @@ class Home extends Page {
     super();
   }
 
-  render() {
-    super.render();
+  renderPage() {
     this.$view.textContent = 'Home';
   }
 }

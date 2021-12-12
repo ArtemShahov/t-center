@@ -1,5 +1,9 @@
+import Router from "../utils/Router.js";
+
 class View {
   constructor() {
+    this.path = '';
+    this.routes = {};
     this.eventListeners = {};
     this.$main = document.getElementById('main');
     this.$header = document.getElementById('header');
@@ -10,7 +14,15 @@ class View {
     this.eventListeners[eventName] = callback;
   }
 
-  render() {}
+  render() {
+    this.clearView();
+    const { hash, param } = Router.getNextHash(this.path);
+    if (this.routes[hash]) {
+      const page = new this.routes[hash](hash, param);
+      page.addEventListener('onViewChange', this.eventListeners.onViewChange.bind(this));
+      page.render();
+    }
+  }
 
   clearView() {
     [

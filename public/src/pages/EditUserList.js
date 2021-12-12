@@ -1,31 +1,19 @@
 import Page from './Page.js';
 import Button from '../Components/common/Button.js';
 import DataService from '../DataService/DataService.js';
-import EditUserForm from '../Components/Forms/EditUserForm.js';
+import EditUserForm from './EditUserForm.js';
 import Router from '../utils/Router.js';
-import Page404 from './Page404.js';
 import Avatar from '../Components/common/Avatar.js';
 
-class EditUser extends Page {
+class EditUserList extends Page {
   constructor(path) {
     super(path);
     this.routes = {
-      '': this.renderUserList,
-      ':userEmail': this.renderEditForm,
+      'userEmail': EditUserForm,
     };
   }
 
-  render() {
-    super.render();
-    const hash = Router.getNextHash(this.path);
-    if (hash) {
-      this.routes[':userEmail'].call(this, hash);
-    } else {
-      this.routes[''].call(this);
-    }
-  }
-
-  async renderUserList() {
+  async renderPage() {
     const data = await DataService.getUsersData();
     const $userList = document.createElement('ul');
     const $userListTitle = document.createElement('h2');
@@ -76,21 +64,9 @@ class EditUser extends Page {
     return $listItem;
   }
 
-  async renderEditForm(userEmail) {
-    super.render();
-    const editForm = await EditUserForm(userEmail);
-    editForm.addEventListener('onViewChange', Router.goBack);
-    this.$view.append(editForm.$view);
-
-  }
-
-  renderThisPage() {
-    Router.goTo(`/${this.path}`);
-  }
-
   onClickHandler(event) {
     const { action, userEmail } = event.target?.dataset;
-    if (action === 'renderEditForm') Router.goNext(`/${userEmail}`);
+    if (action === 'renderEditForm') Router.goNext(`/userEmail:${userEmail}`);
     if (action === 'deleteUser') this.deleteUser(userEmail);
   }
 
@@ -100,4 +76,4 @@ class EditUser extends Page {
   }
 }
 
-export default EditUser;
+export default EditUserList;

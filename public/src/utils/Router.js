@@ -15,7 +15,15 @@ function getNextHash(path) {
   const fullHash = getFullHash();
   const hashArray = fullHash.split('/');
   const currentPathIndex = hashArray.indexOf(path);
-  return hashArray[currentPathIndex + 1] || '';
+  const nexFullHash = hashArray[currentPathIndex + 1] || '';
+  const [hash, param] = nexFullHash.split(':');
+  return { hash, param };
+}
+
+function getLastHash() {
+  const fullHash = getFullHash();
+  const lastHash = fullHash.split('/').reverse()[0];
+  return lastHash || '';
 }
 
 function checkHash() {
@@ -41,4 +49,5 @@ export default {
   goBack,
   getNextHash,
   checkHash,
+  getLastHash,
 };

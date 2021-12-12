@@ -1,4 +1,5 @@
 import DataService from "../DataService/DataService.js";
+import Router from "./Router.js";
 
 function getUser() {
   const user = localStorage.getItem('auth');
@@ -11,6 +12,7 @@ function setUser(user) {
 
 function signOut() {
   localStorage.removeItem('auth');
+  Router.goTo('/');
 }
 
 async function onSubmitSignIn(userData) {
@@ -18,6 +20,7 @@ async function onSubmitSignIn(userData) {
   const authResult = await DataService.checkUser({ email, password });
   if (authResult.status) {
     setUser(email);
+    Router.goTo('/');
   }
   return authResult;
 }
@@ -33,6 +36,7 @@ async function onSubmitSignUp(userData) {
     return result;
   }
   await DataService.addNewUser({ email, password, birthDay });
+  Router.goTo('/');
   return result;
 }
 
