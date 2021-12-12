@@ -25,8 +25,7 @@ class Page {
       this.$main.append(this.$view);
     } else {
       const page = new this.routes[hash](hash, param);
-      page.renderPage();
-      this.$main.append(page.$view);
+      page.render();
     }
   }
 }

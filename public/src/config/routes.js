@@ -11,7 +11,7 @@ export const routes = {
     linkTitle: 'About',
     component: About,
   },
-  '/editUser': {
+  '/editUserList': {
     linkTitle: 'Edit',
     component: EditUserList,
   }
