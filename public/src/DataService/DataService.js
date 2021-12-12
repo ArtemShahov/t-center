@@ -64,7 +64,6 @@ async function sendNewUserPhoto(formData) {
     method: 'POST',
     body: formData,
   });
-
   return await response.text();
 }
 
