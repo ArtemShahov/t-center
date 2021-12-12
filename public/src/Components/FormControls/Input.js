@@ -34,7 +34,6 @@ class Input extends BaseFormControl {
     return isValid;
   }
 
-
   setWarning(helperText = 'Not valid') {
     this.$view.classList.add('invalid-input');
     this.setHelperText(helperText);

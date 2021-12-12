@@ -16,3 +16,11 @@ export const routes = {
     component: EditUser,
   }
 };
+
+export default {
+  signIn: 'signIn',
+  signUp: 'signUp',
+  home: 'home',
+  about: 'about',
+  editUser: 'editUser',
+}

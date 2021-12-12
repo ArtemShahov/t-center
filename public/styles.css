@@ -292,4 +292,26 @@ body {
   width: 48px;
 }
 
+.back-drop {
+  position: fixed;
+  inset: 0px;
+}
+
+.context-menu {
+  background-color: #fff;
+  border-radius: 3px;
+  padding: 8px 0;
+  list-style: none;
+  position: absolute;
+}
+
+.context-menu__item {
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.context-menu__item:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
 /*# sourceMappingURL=styles.css.map */

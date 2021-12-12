@@ -1,7 +1,7 @@
 import Button from "../Components/common/Button.js";
 import Auth from '../utils/Auth.js';
 import View from "./View.js";
-import { routes } from '../config/routes.js';
+import RoutesEnum, { routes } from '../config/routes.js';
 import Home from "../pages/Home.js";
 import EditUser from "../pages/EditUser.js";
 import About from "../pages/About.js";
@@ -13,8 +13,8 @@ class MainView extends View {
     this.path = '';
     this.routes = {
       '': Home,
-      'about': About,
-      'editUser': EditUser,
+      [RoutesEnum.about]: About,
+      [RoutesEnum.editUser]: EditUser,
     };
   }
 

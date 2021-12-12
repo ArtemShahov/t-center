@@ -3,6 +3,7 @@ import DataService from "../../DataService/DataService.js";
 
 async function EditUserForm(userEmail) {
   const user = await DataService.getUserData(userEmail);
+  if (!user) throw new Error('User is not exist');
   const {
     firstName,
     lastName,
@@ -15,6 +16,10 @@ async function EditUserForm(userEmail) {
   } = user;
   const formTitle = 'Edit user';
   const fieldSettings = [
+    {
+      controlType: 'editUserPhoto',
+      userEmail: email,
+    },
     {
       name: 'firstName',
       type: 'text',
@@ -46,6 +51,12 @@ async function EditUserForm(userEmail) {
       label: 'Description',
       value: description || '',
     },
+    // {
+    //   controlType: 'file',
+    //   name: 'photo',
+    //   label: 'Photo',
+    //   userEmail: userEmail,
+    // },
     {
       controlType: 'date',
       name: 'birthDay',

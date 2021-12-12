@@ -3,25 +3,25 @@ import Button from '../Components/common/Button.js';
 import DataService from '../DataService/DataService.js';
 import EditUserForm from '../Components/Forms/EditUserForm.js';
 import Router from '../utils/Router.js';
+import Page404 from './Page404.js';
 
 class EditUser extends Page {
   constructor(path) {
     super(path);
     this.routes = {
       '': this.renderUserList,
-      '*': this.renderEditForm,
+      ':userEmail': this.renderEditForm,
     };
   }
 
   render() {
     super.render();
     const hash = Router.getNextHash(this.path);
-    if (this.routes[hash]) {
-      this.routes[hash].call(this);
+    if (hash) {
+      this.routes[':userEmail'].call(this, hash);
     } else {
-      this.routes['*'].call(this, hash);
+      this.routes[''].call(this);
     }
-
   }
 
   async renderUserList() {
@@ -84,10 +84,17 @@ class EditUser extends Page {
   }
 
   async renderEditForm(userEmail) {
-    const editForm = await EditUserForm(userEmail);
-    editForm.addEventListener('onViewChange', Router.goBack);
-    this.$view.innerHTML = '';
-    this.$view.append(editForm.$view);
+    super.render();
+    // try {
+      const editForm = await EditUserForm(userEmail);
+      editForm.addEventListener('onViewChange', Router.goBack);
+      // this.$view.innerHTML = '';
+      this.$view.append(editForm.$view);
+    // }
+    // catch (error) {
+    //   // const errorPage = new Page404(this.path, error);
+    //   // this.$view.append(errorPage.$view);
+    // }
   }
 
   renderThisPage() {

@@ -207,7 +207,7 @@ body {
   gap: $size;
 }
 
-.form-buttons > * {
+.form-buttons>* {
   flex-grow: 1;
 }
 
@@ -297,4 +297,26 @@ body {
 .user-avatar {
   height: $size * 6;
   width: $size * 6;
+}
+
+.back-drop {
+  position: fixed;
+  inset: 0px;
+}
+
+.context-menu {
+  background-color: #fff;
+  border-radius: 3px;
+  padding: $size 0;
+  list-style: none;
+  position: absolute;
+}
+
+.context-menu__item {
+  padding: $size ($size * 2);
+  cursor: pointer;
+}
+
+.context-menu__item:hover {
+  background-color: rgba($color: #000000, $alpha: .2);
 }
