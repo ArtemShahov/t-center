@@ -3,7 +3,7 @@ import Button from '../Components/common/Button.js';
 import DataService from '../DataService/DataService.js';
 import EditUserForm from './EditUserForm.js';
 import Router from '../utils/Router.js';
-import Page404 from './Page404.js';
+import Avatar from '../Components/common/Avatar.js';
 
 class EditUserList extends Page {
   constructor(path) {
@@ -32,10 +32,10 @@ class EditUserList extends Page {
   }
 
   createUserItem(userData) {
-    const { email, firstName, lastName, gender } = userData;
+    const { email, firstName, lastName, userPhoto } = userData;
     const fullName = (firstName || '') + ' ' + (lastName || '');
     const $listItem = document.createElement('li');
-    const $userAvatar = document.createElement('img');
+    const $userAvatar = (new Avatar(userPhoto).$view);
     const $userInfo = document.createElement('div');
     const $userEmail = document.createElement('div');
     const $userFullName = document.createElement('div');
@@ -46,14 +46,6 @@ class EditUserList extends Page {
     $userInfo.classList.add('user-item__info');
     $userEmail.classList.add('user-item__email');
     $userFullName.classList.add('user-item__name');
-
-    if (gender?.includes('male')) {
-      $userAvatar.src = 'src/assets/user-male.png';
-    } else if (gender?.includes('female')) {
-      $userAvatar.src = 'src/assets/user-female.png';
-    } else {
-      $userAvatar.src = 'src/assets/user.png';
-    }
     $userAvatar.classList.add('user-avatar');
 
     $editButton.dataset.userEmail = email;

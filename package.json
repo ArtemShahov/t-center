@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "sass": "sass client/styles.scss client/styles.css",
+    "sass": "sass public/styles.scss public/styles.css",
     "start": "node ./server.js",
     "dev": "nodemon ./server.js"
   },

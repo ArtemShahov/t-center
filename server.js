@@ -1,7 +1,6 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path/posix');
-const fs = require('fs');
 
 const PORT = process.env.PORT || 5050;
 const app = express();
@@ -21,19 +20,18 @@ app.get('/', (req, res) => {
     res.sendFile(path.resolve('index.html'));
 })
 
-app.post('/uploadUserPhoto/:userEmail', upload.single("photo"), async (req, res) => {
-    console.log(req.originalUrl);
-    res.send(req.file.filename);
+app.post('/uploadUserPhoto', upload.single("photo"), async (req, res) => {
+    console.log(req.file.path);
+    res.send(req.file.path);
 })
 
 
 app.get('/getDefaultPhotoUrl', (req, res) => {
     console.log('sendFile');
-    res.send('/images' + '/noPhotos.png');
+    res.send('/public/images/noPhotos.png');
 })
 
 
 app.listen(PORT, () => {
     console.log('Server has been started...', PORT);
-    // console.log(app);
 })
