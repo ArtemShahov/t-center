@@ -51,12 +51,6 @@ async function EditUserForm(userEmail) {
       label: 'Description',
       value: description || '',
     },
-    // {
-    //   controlType: 'file',
-    //   name: 'photo',
-    //   label: 'Photo',
-    //   userEmail: userEmail,
-    // },
     {
       controlType: 'date',
       name: 'birthDay',

@@ -5,26 +5,15 @@ import EditUserForm from '../Components/Forms/EditUserForm.js';
 import Router from '../utils/Router.js';
 import Page404 from './Page404.js';
 
-class EditUser extends Page {
+class EditUserList extends Page {
   constructor(path) {
     super(path);
     this.routes = {
-      '': this.renderUserList,
       ':userEmail': this.renderEditForm,
     };
   }
 
-  render() {
-    super.render();
-    const hash = Router.getNextHash(this.path);
-    if (hash) {
-      this.routes[':userEmail'].call(this, hash);
-    } else {
-      this.routes[''].call(this);
-    }
-  }
-
-  async renderUserList() {
+  async renderPage() {
     const data = await DataService.getUsersData();
     const $userList = document.createElement('ul');
     const $userListTitle = document.createElement('h2');
@@ -113,4 +102,4 @@ class EditUser extends Page {
   }
 }
 
-export default EditUser;
+export default EditUserList;

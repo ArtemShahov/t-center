@@ -3,7 +3,7 @@ import Auth from '../utils/Auth.js';
 import View from "./View.js";
 import RoutesEnum, { routes } from '../config/routes.js';
 import Home from "../pages/Home.js";
-import EditUser from "../pages/EditUser.js";
+import EditUserList from "../pages/EditUserList.js";
 import About from "../pages/About.js";
 import Router from '../utils/Router.js';
 
@@ -14,16 +14,17 @@ class MainView extends View {
     this.routes = {
       '': Home,
       [RoutesEnum.about]: About,
-      [RoutesEnum.editUser]: EditUser,
+      [RoutesEnum.editUserList]: EditUserList,
     };
   }
 
   render() {
-    const path = Router.getNextHash(this.path);
-    this.clearView();
+    //   const path = Router.getNextHash(this.path);
+    //   this.clearView();
+    super.render();
     this.renderNavMenu();
     this.renderSignOutBtn();
-    this.renderPage(path);
+    //   this.renderPage(path.hash);
   }
 
   renderPage(path) {

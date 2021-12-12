@@ -5,8 +5,7 @@ class About extends Page {
     super();
   }
 
-  render() {
-    super.render();
+  renderPage() {
     this.$view.textContent = 'About';
   }
 }

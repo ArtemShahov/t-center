@@ -20,16 +20,6 @@ class AuthView extends View {
     };
   }
 
-  render() {
-    this.clearView();
-    const hash = Router.getNextHash(this.path);
-    if (this.routes[hash]) {
-      this.routes[hash]();
-    } else {
-      this.routes[Routes.signIn]();
-    }
-  }
-
   renderForm(Form, onSubmit) {
     this.form = Form();
     this.form.addEventListener('onSubmit', onSubmit);
@@ -39,7 +29,7 @@ class AuthView extends View {
   }
 
   switchForm() {
-    const hash = Router.getNextHash(this.path);
+    const { hash } = Router.getNextHash(this.path);
     if (hash === Routes.signIn) {
       Router.goTo(`/${Routes.signUp}`);
     } else if (hash === Routes.signUp) {
