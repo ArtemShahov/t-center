@@ -20,6 +20,12 @@ function getNextHash(path) {
   return { hash, param };
 }
 
+function getLastHash() {
+  const fullHash = getFullHash();
+  const lastHash = fullHash.split('/').reverse()[0];
+  return lastHash || '';
+}
+
 function checkHash() {
   const hash = getFullHash();
   if (!hash) {
@@ -43,4 +49,5 @@ export default {
   goBack,
   getNextHash,
   checkHash,
+  getLastHash,
 };

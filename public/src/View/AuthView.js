@@ -4,6 +4,8 @@ import Auth from "../utils/Auth.js";
 import View from "./View.js";
 import Router from "../utils/Router.js";
 import Routes from "../config/routes.js";
+import SignInPage from "../pages/SignInPage.js";
+import SignUpPage from "../pages/SignUpPage.js";
 
 class AuthView extends View {
   constructor() {
@@ -14,9 +16,8 @@ class AuthView extends View {
     };
     this.path = '';
     this.routes = {
-      '': () => Router.goTo(`/${Routes.signIn}`),
-      [Routes.signIn]: () => this.renderForm(SignIn, Auth.onSubmitSignIn),
-      [Routes.signUp]: () => this.renderForm(SignUp, Auth.onSubmitSignUp),
+      [Routes.signIn]: SignInPage,
+      [Routes.signUp]: SignUpPage,
     };
   }
 

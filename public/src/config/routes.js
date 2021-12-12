@@ -18,7 +18,7 @@ export const routes = {
 };
 
 export default {
-  signIn: 'signIn',
+  signIn: '',
   signUp: 'signUp',
   home: 'home',
   about: 'about',
