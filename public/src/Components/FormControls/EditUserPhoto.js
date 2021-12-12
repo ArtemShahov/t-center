@@ -43,12 +43,17 @@ class EditUserPhoto extends File {
     this.$formControl.click();
   }
 
-  deletePhoto() {
+  async deletePhoto() {
+    if (!this.userPhotoUrl) return;
+    await DataService.deleteUserPhoto(this.userPhotoUrl)
     this.userPhotoUrl = null;
     this.renderUserPhoto();
   }
 
   async onPhotoChange() {
+    if (this.userPhotoUrl) {
+      DataService.deleteUserPhoto(this.userPhotoUrl);
+    }
     const formData = new FormData();
     formData.append('photo', super.getValue());
     DataService

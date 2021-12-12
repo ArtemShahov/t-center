@@ -17,8 +17,6 @@ class Page {
 
   render() {
     this.$main.innerHTML = '';
-    // this.$view.innerHTML = '';
-
     const { hash, param } = Router.getNextHash(this.path);
     if (!hash) {
       this.renderPage();

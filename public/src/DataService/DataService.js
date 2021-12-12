@@ -68,8 +68,14 @@ async function sendNewUserPhoto(formData) {
   return await response.text();
 }
 
-async function getDefaultPhotoUrl() {
-  const response = await fetch('/getDefaultPhotoUrl');
+async function deleteUserPhoto(photoUrl) {
+  const response = await fetch('/deleteUserPhoto', {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ photoUrl }),
+  });
 
   return await response.text();
 }
@@ -80,7 +86,7 @@ export default {
   addNewUser,
   checkUser,
   editUser,
-  getDefaultPhotoUrl,
   sendNewUserPhoto,
+  deleteUserPhoto,
   deleteUser,
 }

@@ -13,9 +13,7 @@ class Avatar {
 
   async setImgSrc(imgUrl) {
     if (!imgUrl) {
-      await DataService
-        .getDefaultPhotoUrl()
-        .then((photoUrl) => imgUrl = photoUrl);
+      imgUrl = '/public/src/assets/no-photo.png';
     }
     this.$img.src = imgUrl;
   }
