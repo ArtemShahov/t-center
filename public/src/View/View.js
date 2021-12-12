@@ -2,12 +2,12 @@ import Router from "../utils/Router.js";
 
 class View {
   constructor() {
+    this.path = '';
+    this.routes = {};
     this.eventListeners = {};
     this.$main = document.getElementById('main');
     this.$header = document.getElementById('header');
     this.$navMenu = document.getElementById('nav-menu');
-    this.path = '';
-    this.routes = {};
   }
 
   addEventListener(eventName, callback) {
@@ -19,6 +19,7 @@ class View {
     const { hash, param } = Router.getNextHash(this.path);
     if (this.routes[hash]) {
       const page = new this.routes[hash](hash, param);
+      page.addEventListener('onViewChange', this.eventListeners.onViewChange.bind(this));
       page.render();
     }
   }

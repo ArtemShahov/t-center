@@ -19,12 +19,9 @@ class MainView extends View {
   }
 
   render() {
-    //   const path = Router.getNextHash(this.path);
-    //   this.clearView();
     super.render();
     this.renderNavMenu();
     this.renderSignOutBtn();
-    //   this.renderPage(path.hash);
   }
 
   renderPage(path) {
@@ -35,12 +32,13 @@ class MainView extends View {
 
   renderSignOutBtn() {
     const $btn = Button('Sign out');
-    $btn.addEventListener('click', this.signOut);
+    $btn.addEventListener('click', this.signOut.bind(this));
     this.$header.append($btn);
   }
 
   signOut() {
     Auth.signOut();
+    this.eventListeners.onViewChange();
     Router.goTo('');
   }
 

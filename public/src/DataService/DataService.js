@@ -59,19 +59,19 @@ async function deleteUser(email) {
   await setUsersData(allUsersData);
 }
 
-async function getUserPhotoUrl(userEmail) {
-  const user = await getUserData(userEmail);
-  if (!user?.photoUrl) {
-    const defaultPhotoUrl = await getDefaultPhotoUrl();
-    return defaultPhotoUrl;
-  }
-  return user.photoUrl;
+async function sendNewUserPhoto(formData) {
+  const response = await fetch('/uploadUserPhoto', {
+    method: 'POST',
+    body: formData,
+  });
+
+  return await response.text();
 }
 
 async function getDefaultPhotoUrl() {
-  const response = await fetch('http://localhost:5050/getDefaultPhotoUrl');
-  const photoUrl = await response.text();
-  return photoUrl;
+  const response = await fetch('/getDefaultPhotoUrl');
+
+  return await response.text();
 }
 
 export default {
@@ -81,5 +81,6 @@ export default {
   checkUser,
   editUser,
   deleteUser,
-  getUserPhotoUrl,
+  sendNewUserPhoto,
+  getDefaultPhotoUrl,
 }

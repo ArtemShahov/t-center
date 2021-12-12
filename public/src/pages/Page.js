@@ -17,7 +17,7 @@ class Page {
 
   render() {
     this.$main.innerHTML = '';
-    this.$view.innerHTML = '';
+    // this.$view.innerHTML = '';
 
     const { hash, param } = Router.getNextHash(this.path);
     if (!hash) {
@@ -25,6 +25,7 @@ class Page {
       this.$main.append(this.$view);
     } else {
       const page = new this.routes[hash](hash, param);
+      page.addEventListener('onViewChange', this.render.bind(this));
       page.render();
     }
   }

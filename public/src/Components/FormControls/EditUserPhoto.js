@@ -1,13 +1,29 @@
 import File from "./File.js";
-import UserPhoto from "../common/UserPhoto.js";
+import Avatar from "../common/Avatar.js";
 import ContextMenu from "../common/ContextMenu.js";
+import DataService from "../../DataService/DataService.js";
 
 class EditUserPhoto extends File {
-  constructor(photoUrl) {
-    super();
-    this.photoUrl = photoUrl;
-    this.userPhoto = new UserPhoto(this.photoUrl);
-    this.contextMenuOptions = [
+  constructor(settings) {
+    super(settings);
+    this.settings = settings;
+    this.userPhotoUrl = settings.value;
+
+    this.$view.classList.add('edit-user-photo-control');
+
+    this.renderUserPhoto();
+    this.initContextMenu();
+    this.$formControl.addEventListener('change', this.onPhotoChange.bind(this));
+  }
+
+  renderUserPhoto() {
+    const photo = new Avatar(this.userPhotoUrl);
+    this.$view.innerHTML = '';
+    this.$view.append(photo.$img);
+  }
+
+  initContextMenu() {
+    const contextMenuOptions = [
       {
         label: 'Add new Photo',
         onClick: 'focusFormControl',
@@ -18,48 +34,34 @@ class EditUserPhoto extends File {
       }
     ];
 
-    this.$view.append(this.userPhoto.$view);
-    this.initContextMenu();
-    this.$formControl.addEventListener('change', this.pep.bind(this));
+    const contextMenu = new ContextMenu(this.$view, contextMenuOptions);
+    contextMenu.addEventListener('focusFormControl', this.focusFormControl.bind(this));
+    contextMenu.addEventListener('deletePhoto', this.deletePhoto.bind(this));
   }
 
   focusFormControl() {
     this.$formControl.click();
   }
 
-  initContextMenu() {
-    const contextMenu = new ContextMenu(this.$view, this.contextMenuOptions);
-    contextMenu.addEventListener('focusFormControl', this.focusFormControl.bind(this));
-    contextMenu.addEventListener('deletePhoto', () => console.log('delete photo'));
+  deletePhoto() {
+    this.userPhotoUrl = null;
+    this.renderUserPhoto();
   }
 
-  pep() {
-    this.request()
-     .then(data => data.text())
-     .then(data => this.addPhoto(data));
- }
+  async onPhotoChange() {
+    const formData = new FormData();
+    formData.append('photo', super.getValue());
+    DataService
+      .sendNewUserPhoto(formData)
+      .then(newPhotoUrl => {
+        this.userPhotoUrl = newPhotoUrl;
+        this.renderUserPhoto();
+      });
+  }
 
- addPhoto(data) {
-   const img = document.createElement('img');
-   const path = data.replace('public/', '')
-   const url = `http://localhost:5050/images/${path}`;
-   img.src = url
-   this.$view.innerHTML = '';
-   this.$view.append(img);
- }
-
- async request() {
-   const formData = new FormData();
-   formData.append('photo', this.getValue());
-   console.log(formData);
-   const response = await fetch(`http://localhost:5050/uploadUserPhoto/${this.userEmail}`, {
-     method: 'POST',
-     body: formData,
-   });
-   
-   console.log(window.location.hash);
-   return response;
- }
+  getValue() {
+    return this.userPhotoUrl;
+  }
 }
 
 export default EditUserPhoto;

@@ -5,7 +5,6 @@ import ChoiceGroup from '../FormControls/ChoiceGroup.js';
 import DateInput from "../FormControls/DateInput.js";
 import TextArea from "../FormControls/TextArea.js";
 import File from "../FormControls/File.js";
-import UserPhoto from "../common/UserPhoto.js";
 import EditUserPhoto from "../FormControls/EditUserPhoto.js";
 
 class Form {
@@ -30,7 +29,6 @@ class Form {
     this.$buttons.classList.add('form-buttons');
 
     this.controlEnum = {
-      'photo': UserPhoto,
       'editUserPhoto': EditUserPhoto,
       'select': Select,
       'choiceGroup': ChoiceGroup,
